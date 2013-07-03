@@ -63,7 +63,7 @@ describe DeepEnd::Graph do
       expect { @graph.add_dependency @dependency_a, [@dependency_b] }.to raise_error(DeepEnd::CircularDependencyError) 
     end
 
-    it "should have no resolved dependencies when cleared" do
+    it "should have no resolved dependencies when reset" do
       # Add dependencies
       @graph.add_dependency @dependency_c, [@dependency_b, @dependency_a]
       @graph.add_dependency @dependency_b, [@dependency_a]

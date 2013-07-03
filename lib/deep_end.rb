@@ -2,15 +2,16 @@ require "deep_end/version"
 
 module DeepEnd
 
+  # Errors
   class SelfDependencyError < StandardError; end
   class CircularDependencyError < StandardError; end
   
+  # Graph Node
   class Node
 
     attr_reader :key
     attr_accessor :seen
     attr_reader :edges
-    attr_accessor :dependee
 
     def initialize(key)
       @key = key
@@ -23,6 +24,7 @@ module DeepEnd
     
   end
 
+  # Dependency Graph
   class Graph
 
     def resolved_dependencies
@@ -45,16 +47,19 @@ module DeepEnd
         node.addEdge(node_for_key_or_new(dependency))
       end
       resolve_dependencies
+      return @resolved
     end
 
+    # Return the graph to its virgin state
     def reset
-       @resolved = []
+      @resolved = []
       @seen_this_pass
       @nodes = []
     end
 
     protected
 
+      # Recurse through nodes
       def resolve_dependencies
         reset_seen
         @resolved = []
@@ -80,7 +85,6 @@ module DeepEnd
             end
           end
         end
-
         @resolved << node
       end
       
@@ -89,11 +93,7 @@ module DeepEnd
       end
 
       def node_for_key(key)
-        @nodes.each do |node|
-          if node.key == key
-            return node
-          end
-        end
+        @nodes.each { |node| return node if node.key == key }
         return 
       end
 
@@ -102,16 +102,14 @@ module DeepEnd
         if existing_node
           return existing_node
         else
-          node = Node.new(key)
+          node = Node.new key 
           @nodes << node
           return node
         end
       end
 
       def reset_seen
-        @nodes.each do |node| 
-          node.seen = false
-        end
+        @nodes.each{ |node| node.seen = false}
       end
 
   end
