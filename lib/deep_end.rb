@@ -101,6 +101,6 @@ module DeepEnd
           node.seen = false
         end
       end
-
+      
   end
 end
