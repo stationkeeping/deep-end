@@ -1,12 +1,16 @@
 require "deep_end/version"
 
 module DeepEnd
+
+  class SelfDependencyError < StandardError; end
+  class CircularDependencyError < StandardError; end
   
   class Node
 
     attr_reader :key
     attr_accessor :seen
     attr_reader :edges
+    attr_accessor :dependee
 
     def initialize(key)
       @key = key
@@ -20,6 +24,7 @@ module DeepEnd
   end
 
   class Graph
+
     def resolved_dependencies
       a = []
       @resolved.each{|node| a << node.key}
@@ -27,18 +32,25 @@ module DeepEnd
     end 
 
     def initialize
-      @resolved = []
-      @seen_this_pass
-      @nodes = []
+      reset
     end
 
     # Add a new node, causing dependencies to be re-evaluated
     def add_dependency(key, dependencies = [])
+
+      raise SelfDependencyError, "An object's dependencies cannot contain itself" if dependencies.include? key
+
       node = node_for_key_or_new key
       dependencies.each do |dependency|
         node.addEdge(node_for_key_or_new(dependency))
       end
       resolve_dependencies
+    end
+
+    def reset
+       @resolved = []
+      @seen_this_pass
+      @nodes = []
     end
 
     protected
@@ -64,7 +76,7 @@ module DeepEnd
                 resolve_dependency edge
               end
             else
-              raise "Circular reference detected: #{node.key.to_s} - #{edge.key.to_s}"
+              raise CircularDependencyError, "Circular reference detected: #{node.key.to_s} - #{edge.key.to_s}"
             end
           end
         end
@@ -101,6 +113,6 @@ module DeepEnd
           node.seen = false
         end
       end
-      
+
   end
 end
