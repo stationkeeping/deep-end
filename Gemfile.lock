@@ -1,0 +1,16 @@
+PATH
+  remote: .
+  specs:
+    deep_end (0.0.1)
+      log4r
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    log4r (1.1.10)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  deep_end!
