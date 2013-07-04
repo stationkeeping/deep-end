@@ -51,7 +51,6 @@ If an object is added with itself as a dependency, a `SelfDependencyError` will 
 If a circular dependency is detected a `CircularDependencyError` will be raise.
 
 
-
 ## Contributing
 
 1. Fork it
@@ -59,8 +58,3 @@ If a circular dependency is detected a `CircularDependencyError` will be raise.
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-=======
-Deep-End
-========
-
-
