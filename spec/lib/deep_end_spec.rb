@@ -1,20 +1,20 @@
 require 'spec_helper'
 
 module DeepEnd
-  
+
   describe Graph do
 
     before(:each) do
       @graph = Graph.new
     end
 
-    context 'when first created' do 
+    context 'when first created' do
       it 'should have no resolved dependencies' do
         @graph.resolved_dependencies.should be_empty
       end
     end
 
-    context 'when given dendencies' do 
+    context 'when given dendencies' do
 
       # Create dependencies
       before(:each) do
@@ -61,32 +61,33 @@ module DeepEnd
 
       it 'should raise a SelfDependencyError if an object is added as its own dependency' do
         # Add dependencies
-        expect { @graph.add_dependency @dependency_a, [@dependency_a] }.to raise_error(SelfDependencyError) 
+        expect { @graph.add_dependency @dependency_a, [@dependency_a] }.to raise_error(SelfDependencyError)
       end
 
       it 'should raise a CircularDependencyError if objects are added with direct circular dependencies' do
         # Add dependencies
         @graph.add_dependency @dependency_b, [@dependency_a]
-        expect { @graph.add_dependency @dependency_a, [@dependency_b] }.to raise_error(CircularDependencyError) 
+        expect { @graph.add_dependency @dependency_a, [@dependency_b] }.to raise_error(CircularDependencyError)
       end
 
       it 'should raise a CircularDependencyError if objects are added with indirect circular dependencies' do
         # Add dependencies
         @graph.add_dependency @dependency_b, [@dependency_c]
         @graph.add_dependency @dependency_c, [@dependency_a]
-        expect { @graph.add_dependency @dependency_a, [@dependency_b] }.to raise_error(CircularDependencyError) 
+        expect { @graph.add_dependency @dependency_a, [@dependency_b] }.to raise_error(CircularDependencyError)
       end
 
-      context "when reset" do 
+      context "when reset" do
 
         it 'should have no resolved dependencies' do
           # Add dependencies
           @graph.add_dependency @dependency_c, [@dependency_b, @dependency_a]
           @graph.add_dependency @dependency_b, [@dependency_a]
           @graph.add_dependency @dependency_a
-          @graph.reset 
+          @graph.reset
           @graph.resolved_dependencies.length.should == 0
         end
+
       end
 
     end
