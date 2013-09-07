@@ -1,7 +1,6 @@
 require "deep_end/version"
 
 module DeepEnd
-
   # Errors
   class SelfDependencyError < StandardError; end
   class CircularDependencyError < StandardError; end
@@ -13,6 +12,7 @@ module DeepEnd
     attr_accessor :seen
     alias_method :seen?, :seen
     attr_reader :edges
+    attr_reader :resolved_dependencies
 
     def initialize(key)
       @key = key

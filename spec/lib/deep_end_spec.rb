@@ -30,6 +30,12 @@ module DeepEnd
         sorted_objects = @graph.resolved_dependencies.should_not be_empty
       end
 
+      it 'with single dependency, there should only be one item' do
+        @graph.add_dependency @dependency_a
+        sorted_objects = @graph.resolved_dependencies.length.should == 1
+        @graph.resolved_dependencies[0].should == @dependency_a
+      end
+
       it 'should contain the dependency' do
         @graph.add_dependency @dependency_a
         sorted_objects = @graph.resolved_dependencies.should include(@dependency_a)
