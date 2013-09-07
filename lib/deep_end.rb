@@ -58,12 +58,10 @@ module DeepEnd
 
     # Recurse through nodes
     def resolve_dependencies
-      puts "NODES: "+@nodes.inspect
       reset_seen
       @resolved = []
       @nodes.each do |node|
         @seen_this_pass = []
-        puts "RESOLVED: "+@resolved.inspect
         resolve_dependency node unless node.seen?
       end
       @resolved
@@ -74,7 +72,6 @@ module DeepEnd
       node.seen = true
       @seen_this_pass << node
 
-      puts "EDGES: "+ node.edges.inspect
       node.edges.each do |edge|
         unless @resolved.include? edge
           unless @seen_this_pass.include? edge
