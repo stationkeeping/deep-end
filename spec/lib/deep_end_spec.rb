@@ -88,6 +88,19 @@ module DeepEnd
           @graph.resolved_dependencies.length.should == 0
         end
 
+        it 'should correctly order interdependent objects' do
+          # Add dependencies
+          @graph.add_dependency @dependency_f, [@dependency_e, @dependency_d]
+          @graph.add_dependency @dependency_e, [@dependency_d]
+          @graph.add_dependency @dependency_d
+          # Check order
+          sorted_objects = @graph.resolved_dependencies
+          sorted_objects[0].should == @dependency_d
+          sorted_objects[1].should == @dependency_e
+          sorted_objects[2].should == @dependency_f
+        end
+
+
       end
 
     end
