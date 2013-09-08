@@ -65,6 +65,18 @@ module DeepEnd
         sorted_objects[2].should == @dependency_c
       end
 
+      it 'should correctly order interdependent objects regardless of order added' do
+        # Add dependencies
+        @graph.add_dependency @dependency_a
+        @graph.add_dependency @dependency_b, [@dependency_a]
+        @graph.add_dependency @dependency_c, [@dependency_b, @dependency_a]
+        # Check order
+        sorted_objects = @graph.resolved_dependencies
+        sorted_objects[0].should == @dependency_a
+        sorted_objects[1].should == @dependency_b
+        sorted_objects[2].should == @dependency_c
+      end
+
       it 'should raise a SelfDependencyError if an object is added as its own dependency' do
         # Add dependencies
         expect { @graph.add_dependency @dependency_a, [@dependency_a] }.to raise_error(SelfDependencyError)
@@ -105,7 +117,6 @@ module DeepEnd
           sorted_objects[1].should == @dependency_e
           sorted_objects[2].should == @dependency_f
         end
-
 
       end
 
