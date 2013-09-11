@@ -1,6 +1,6 @@
 # DeepEnd
 
-[![Gem Version](https://badge.fury.io/rb/drive_time.png)](http://badge.fury.io/rb/drive_time)
+[![Gem Version](https://badge.fury.io/rb/deep_end.png)](http://badge.fury.io/rb/deep_end)
 
 This gem processes a list of objects and their dependencies, ordering them so that dependencies are correctly resolved and checking for circular dependencies.
 
