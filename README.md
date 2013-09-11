@@ -1,5 +1,7 @@
 # DeepEnd
 
+[![Gem Version](https://badge.fury.io/rb/drive_time.png)](http://badge.fury.io/rb/drive_time)
+
 This gem processes a list of objects and their dependencies, ordering them so that dependencies are correctly resolved and checking for circular dependencies.
 
 ## Installation
@@ -23,7 +25,7 @@ The Graph is the only class you have to worry about:
     dependency_graph = Graph.new
 
 Add any objects you like to it, along with an array of any other objects that they depend on:
-    
+
     # Create objects - you can use any objects/instances
     dependency_a = {name: 'a'}
     dependency_b = {name: 'b'}
@@ -46,7 +48,7 @@ Whenever a new object is added with `add_dependency`, the graph re-calculates de
 be added multiple times with different dependencies. Dependencies are cumulative, so adding an object for
 a second time with different dependencies will result in the object having both sets of dependencies.
 
-If an object is added with itself as a dependency, a `SelfDependencyError` will be raised. 
+If an object is added with itself as a dependency, a `SelfDependencyError` will be raised.
 
 If a circular dependency is detected a `CircularDependencyError` will be raise.
 
