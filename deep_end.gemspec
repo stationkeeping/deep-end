@@ -11,12 +11,13 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Simple dependency resolver}
   gem.summary       = %q{This gem processes a list of objects and their dependencies, ordering them in such a way that dependencies are correctly resolved. It checks for circular dependencies and self-dependencies.}
   gem.homepage      = "https://github.com/stationkeeping/Deep-End"
+  gem.license       = "MIT"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_development_dependency('rake', '~> 10.1')
-  gem.add_development_dependency('rspec', '~> 2.14')
+  gem.add_development_dependency 'rake', '~> 10.1'
+  gem.add_development_dependency 'rspec', '~> 2.14'
 end
